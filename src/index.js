@@ -27,7 +27,7 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
 
 /* track if user is logged in & registered */
-window.user_is_registered = $("#thisbidderTB").val() !== "0" && $("#streamPaddleNo").html().trim().length;
+window.user_is_registered = $("#thisbidderTB").val() !== "0" && $("#streamPaddleNo").html();
 
 function SetAutoTick() {
   TickAll();
