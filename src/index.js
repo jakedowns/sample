@@ -27,7 +27,7 @@ const formatter = new Intl.NumberFormat("en-US", {
 });
 
 /* track if user is logged in & registered */
-const is_registered = $("#thisbidderTB").val() !== "0" && $("#streamPaddleNo").html().trim().length;
+window.user_is_registered = $("#thisbidderTB").val() !== "0" && $("#streamPaddleNo").html().trim().length;
 
 function SetAutoTick() {
   TickAll();
@@ -108,7 +108,7 @@ function GotAuctionUpdate(res) {
             /* Set OutBid button  */
             resetButtons();
             if (json.lbidct > 0) {
-              if (is_registered) {
+              if (window.user_is_registered) {
                 $("#state_outbid").addClass("show");
               }
               $("#bidoutbid").attr("value", "Bid " + formatter.format(json.nb));
@@ -116,7 +116,7 @@ function GotAuctionUpdate(res) {
                 "Bid " + formatter.format(json.nb)
               );
             } else {
-              if (is_registered) {
+              if (window.user_is_registered) {
                 $("#state_waiting").addClass("show");
               }
             }
@@ -125,7 +125,7 @@ function GotAuctionUpdate(res) {
           /*  Set Bid button  */
           resetButtons();
           if (json.lbidct > 0) {
-            if (is_registered) {
+            if (window.user_is_registered) {
               $("#state_logged_in").addClass("show");
             }
             $("#bidbtnloggedin").attr(
@@ -134,7 +134,7 @@ function GotAuctionUpdate(res) {
             );
             $("#bidbtnloggedin").prop("disabled", false);
           } else {
-            if (is_registered) {
+            if (window.user_is_registered) {
               $("#state_waiting").addClass("show");
             }
           }
@@ -143,7 +143,7 @@ function GotAuctionUpdate(res) {
     } else {
       if (json.cb - 0 > 0) {
         resetButtons();
-        if (is_registered) {
+        if (window.user_is_registered) {
           $("#state_winning").addClass("show");
         }
         $("#bidbtnwinning").attr(
@@ -196,7 +196,7 @@ function GotAuctionUpdate(res) {
             window.selectLot(json.ln);
             if (json.lbidct == 0) {
               resetButtons();
-              if (is_registered) {
+              if (window.user_is_registered) {
                 $("#state_waiting").addClass("show");
               }
               // window.selectLot(json.ln)	;
@@ -246,12 +246,12 @@ function GotAuctionUpdate(res) {
     if (json) {
       if (json.v == 0) {
         resetButtons();
-        if (is_registered) {
+        if (window.user_is_registered) {
           $("#state_waiting").addClass("show");
         }
       } else if (json.v == $("#waitmessage").val()) {
         resetButtons();
-        if (is_registered) {
+        if (window.user_is_registered) {
           $("#state_waiting").addClass("show");
         }
       }
@@ -793,7 +793,7 @@ function updateBidHistory(newState) {
           var dummy = "";
         } else {
           resetButtons();
-          if (is_registered) {
+          if (window.user_is_registered) {
             $("#state_lastcall").addClass("show");
           }
           $("#bidlastcall").attr(
@@ -896,7 +896,7 @@ function deleteBidCB(newState) {
     if (topBid.bidder == thisBidder.id) {
       // $('#LiveAuctionLotInfoPanelHeader').html('You are the high bidder');
       resetButtons();
-      if (is_registered) {
+      if (window.user_is_registered) {
         $("#state_winning").addClass("show");
       }
       $("#bidbtnwinning").attr(
@@ -907,7 +907,7 @@ function deleteBidCB(newState) {
       // $('#LiveAuctionLotInfoPanelHeader').html('You have been outbid');
       resetButtons();
 
-      if (is_registered) {
+      if (window.user_is_registered) {
         $("#state_outbid").addClass("show");
       }
       $("#bidoutbid").attr("value", "Bid " + formatter.format(newState.nb));
